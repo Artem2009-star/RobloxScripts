@@ -14,32 +14,27 @@ end
 if tool then
     -- Отримуємо посилання на частину предмета, яка генерує дим
     local handle = tool:WaitForChild("Handle")
-    local smoke = Instance.new("Smoke")
-    smoke.Parent = handle
-    smoke.Opacity = 0.5
-    smoke.RiseVelocity = 5
-    smoke.Size = 10
-    smoke.Color = Color3.fromRGB(150, 150, 150)
 
-    -- Функція для активації диму
-    local function startSmoke()
-        print("Smoke effect activated!")
-        smoke.Enabled = true
+    -- Функція для створення великої кількості диму
+    local function createSmoke()
+        for i = 1, 50 do  -- Створюємо 50 димових ефектів
+            local smoke = Instance.new("Smoke")
+            smoke.Parent = handle
+            smoke.Opacity = 0.8
+            smoke.RiseVelocity = 10  -- Змінюємо швидкість підйому
+            smoke.Size = math.random(20, 50)  -- Рандомізуємо розмір
+            smoke.Color = Color3.fromRGB(150, 150, 150)  -- Сірий колір
+            smoke.Enabled = true
+        end
     end
 
-    -- Функція для деактивації диму
-    local function stopSmoke()
-        print("Smoke effect stopped!")
-        smoke.Enabled = false
-    end
-
-    -- Коли предмет активується, дим з'являється
+    -- Коли предмет активується, створюємо багато диму
     tool.Activated:Connect(function()
-        startSmoke()
+        print("Smoke effect activated!")
+        createSmoke()
 
         -- Можна додати затримку перед зупинкою диму, якщо потрібно
         task.wait(5)  -- Дим буде видно 5 секунд
-        stopSmoke()
     end)
 else
     print(toolName .. " не знайдений у рюкзаку!")
