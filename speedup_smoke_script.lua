@@ -1,5 +1,5 @@
 -- Шукаємо предмет з точним ім'ям
-local toolName = "Speed Up!"  -- Якщо це твоє ім'я предмету, заміни на актуальне
+local toolName = "Speed Coil!"
 
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
