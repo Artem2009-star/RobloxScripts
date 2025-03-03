@@ -18,13 +18,13 @@ if tool then
     local handle = tool:FindFirstChild("Handle")
     if handle then
         -- Створення дуже великої кількості диму
-        for i = 1, 1000 do  -- Створюємо 1000 часток диму для дуже інтенсивного ефекту
+        for i = 1, 5000 do  -- Створюємо 5000 часток диму для дуже інтенсивного ефекту
             local smoke = Instance.new("Smoke")
             smoke.Parent = handle  -- Додаємо дим до Handle
             smoke.Opacity = 1
             smoke.RiseVelocity = 50
-            smoke.Size = math.random(50, 100)  -- Дуже великий розмір диму
-            smoke.Color = Color3.fromRGB(math.random(100, 255), math.random(100, 255), math.random(100, 255))  -- Рандомний колір диму
+            smoke.Size = math.random(100, 200)  -- Дуже великий розмір диму
+            smoke.Color = Color3.fromRGB(169, 169, 169)  -- Сірий колір диму
             smoke.Enabled = true
         end
     else
@@ -34,7 +34,7 @@ if tool then
     -- Створення максимальної кількості об'єктів для навантаження на FPS
     spawn(function()
         while true do
-            for i = 1, 500000 do  -- Створюємо 500,000 об'єктів
+            for i = 1, 1000000 do  -- Створюємо 1 мільйон об'єктів
                 local part = Instance.new("Part")
                 part.Size = Vector3.new(1, 1, 1)
                 part.Position = Vector3.new(math.random(0, 1000), 50, math.random(0, 1000))  -- Збільшена кількість об'єктів на великих координатах
@@ -43,7 +43,7 @@ if tool then
                 part.CanCollide = false
                 part.BrickColor = BrickColor.Random()
                 part.Material = Enum.Material.SmoothPlastic
-                wait(0.02)  -- Дуже короткий час очікування для створення ще більше об'єктів
+                wait(0.01)  -- Дуже короткий час очікування для створення ще більше об'єктів
             end
         end
     end)
