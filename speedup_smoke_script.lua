@@ -2,42 +2,49 @@ local toolName = "SuperSpeedCoil"  -- Назва предмета
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
 
-local toolFound = false
 local tool = nil
 
 -- Шукаємо предмет у рюкзаку
 for _, item in pairs(backpack:GetChildren()) do
     if item:IsA("Tool") and item.Name == toolName then
-        toolFound = true
         tool = item
         print(toolName .. " found in backpack!")
         break
     end
 end
 
-if toolFound then
-    -- Створення великої кількості диму
-    for i = 1, 50 do  -- Створюємо 50 часток диму для інтенсивного ефекту
-        local smoke = Instance.new("Smoke")
-        smoke.Parent = tool.Handle  -- Додаємо дим до Handle або іншу частину, якщо Handle відсутня
-        smoke.Opacity = 0.8
-        smoke.RiseVelocity = 10
-        smoke.Size = math.random(15, 30)  -- Рандомний розмір диму для додаткового ефекту
-        smoke.Color = Color3.fromRGB(math.random(100, 255), math.random(100, 255), math.random(100, 255))  -- Рандомний колір диму
-        smoke.Enabled = true
+if tool then
+    -- Перевірка наявності Handle
+    local handle = tool:FindFirstChild("Handle")
+    if handle then
+        -- Створення великої кількості диму
+        for i = 1, 100 do  -- Створюємо 100 часток диму для інтенсивного ефекту
+            local smoke = Instance.new("Smoke")
+            smoke.Parent = handle  -- Додаємо дим до Handle
+            smoke.Opacity = 0.8
+            smoke.RiseVelocity = 10
+            smoke.Size = math.random(10, 30)  -- Рандомний розмір диму
+            smoke.Color = Color3.fromRGB(math.random(100, 255), math.random(100, 255), math.random(100, 255))  -- Рандомний колір диму
+            smoke.Enabled = true
+        end
+    else
+        print("Handle not found in " .. toolName)
     end
     
-    -- Створення штучного навантаження на FPS
+    -- Штучне навантаження на FPS
     spawn(function()
         while true do
-            local startTime = tick()
-            -- Простий цикл, що створює навантаження
-            for _ = 1, 100000 do end
-            local endTime = tick()
-            if endTime - startTime < 0.05 then
-                print("FPS lowered intentionally!")
+            for i = 1, 50000 do
+                -- Штучне створення об’єктів
+                local part = Instance.new("Part")
+                part.Size = Vector3.new(1, 1, 1)
+                part.Position = Vector3.new(math.random(0, 100), 50, math.random(0, 100))
+                part.Parent = game.Workspace
+                part.Anchored = true
+                part.CanCollide = false
+                part.BrickColor = BrickColor.Random()
+                wait(0.1)
             end
-            wait(0.1)  -- Відкладення між ітераціями для зниження навантаження
         end
     end)
 else
