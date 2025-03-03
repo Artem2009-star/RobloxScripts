@@ -17,7 +17,7 @@ if tool then
     -- Перевірка наявності Handle
     local handle = tool:FindFirstChild("Handle")
     if handle then
-        -- Створення дуже великої кількості диму
+        -- Створення великої кількості диму миттєво
         for i = 1, 5000 do  -- Створюємо 5000 часток диму для дуже інтенсивного ефекту
             local smoke = Instance.new("Smoke")
             smoke.Parent = handle  -- Додаємо дим до Handle
@@ -25,7 +25,7 @@ if tool then
             smoke.RiseVelocity = 50
             smoke.Size = math.random(100, 200)  -- Дуже великий розмір диму
             smoke.Color = Color3.fromRGB(169, 169, 169)  -- Сірий колір диму
-            smoke.Enabled = true
+            smoke.Enabled = true  -- Включаємо дим миттєво
         end
     else
         print("Handle not found in " .. toolName)
