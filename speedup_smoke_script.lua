@@ -1,16 +1,19 @@
--- Шукаємо предмет з точним ім'ям
-local toolName = "Speed Coil!"
-
+local toolName = "Speed Up!"
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
 
--- Перевірка наявності предмету в інвентарі
-local tool = backpack:FindFirstChild(toolName)
+local toolFound = false
+for _, item in pairs(backpack:GetChildren()) do
+    if item:IsA("Tool") and item.Name == toolName then
+        toolFound = true
+        print(toolName .. " found in backpack!")
+        break
+    end
+end
 
-if tool then
-    print(toolName .. " found in backpack!")
-    -- Код для активації ефекту диму або іншого
-    local part = tool.Handle  -- Можливо, треба буде змінити, залежно від об'єкта
+if toolFound then
+    local tool = backpack:FindFirstChild(toolName)
+    local part = tool.Handle
     local smoke = Instance.new("Smoke")
     smoke.Parent = part
     smoke.Opacity = 0.5
