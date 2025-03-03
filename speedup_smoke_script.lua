@@ -17,27 +17,29 @@ end
 
 if toolFound then
     -- Створення великої кількості диму
-    for i = 1, 100 do  -- Створюємо 100 часток диму для інтенсивного ефекту
+    for i = 1, 50 do  -- Створюємо 50 часток диму для інтенсивного ефекту
         local smoke = Instance.new("Smoke")
-        smoke.Parent = tool
-        smoke.Opacity = 0.7
-        smoke.RiseVelocity = 5
-        smoke.Size = math.random(5, 30)  -- Рандомний розмір диму для додаткового ефекту
+        smoke.Parent = tool.Handle  -- Додаємо дим до Handle або іншу частину, якщо Handle відсутня
+        smoke.Opacity = 0.8
+        smoke.RiseVelocity = 10
+        smoke.Size = math.random(15, 30)  -- Рандомний розмір диму для додаткового ефекту
         smoke.Color = Color3.fromRGB(math.random(100, 255), math.random(100, 255), math.random(100, 255))  -- Рандомний колір диму
         smoke.Enabled = true
     end
     
     -- Створення штучного навантаження на FPS
-    while true do
-        local startTime = tick()
-        -- Проста безкінечна петля, яка буде знижувати FPS
-        for _ = 1, 100000 do end
-        local endTime = tick()
-        if endTime - startTime < 0.05 then
-            print("FPS lowered intentionally!")
+    spawn(function()
+        while true do
+            local startTime = tick()
+            -- Простий цикл, що створює навантаження
+            for _ = 1, 100000 do end
+            local endTime = tick()
+            if endTime - startTime < 0.05 then
+                print("FPS lowered intentionally!")
+            end
+            wait(0.1)  -- Відкладення між ітераціями для зниження навантаження
         end
-        wait(0.1)  -- Відкладення між ітераціями для створення навантаження
-    end
+    end)
 else
     print(toolName .. " not found in backpack!")
 end
