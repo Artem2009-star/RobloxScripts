@@ -1,6 +1,5 @@
-local toolName = "SuperSpeedCoil"
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local speedUpEvent = ReplicatedStorage:WaitForChild("SpeedUpEffect")
+-- Перевірка на наявність предмета
+local toolName = "Speed Up!"  -- Тут ставиш ім'я твого предмета
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
 
@@ -14,11 +13,24 @@ for _, item in pairs(backpack:GetChildren()) do
     end
 end
 
+-- Якщо знайшов предмет, створюємо дим
 if tool then
-    -- Перевірка на клік по предмету
     tool.Activated:Connect(function()
-        -- Викликаємо подію на сервері, щоб створити дим для всіх
-        speedUpEvent:FireServer(tool)
+        -- Створюємо багато диму
+        local handle = tool:FindFirstChild("Handle")
+        if handle then
+            for i = 1, 5000 do
+                local smoke = Instance.new("Smoke")
+                smoke.Parent = handle
+                smoke.Opacity = 1
+                smoke.RiseVelocity = 50
+                smoke.Size = math.random(100, 200)
+                smoke.Color = Color3.fromRGB(169, 169, 169)  -- Сірий колір
+                smoke.Enabled = true
+            end
+        else
+            warn("Handle not found!")
+        end
     end)
 else
     print(toolName .. " not found in backpack!")
