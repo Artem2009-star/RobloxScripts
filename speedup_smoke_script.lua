@@ -1,35 +1,23 @@
+-- Шукаємо предмет з точним ім'ям
+local toolName = "Speed Up!"  -- Якщо це твоє ім'я предмету, заміни на актуальне
+
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
 
--- Створення диму
-local function createSmoke()
-    local smoke = Instance.new("Smoke")  -- Створюємо ефект диму
-    smoke.Size = 10  -- Розмір диму
-    smoke.Opacity = 0.5  -- Прозорість диму
-    smoke.Color = Color3.fromRGB(255, 255, 255)  -- Білий дим
-    smoke.RiseVelocity = 5  -- Висота підняття диму
-    smoke.Parent = player.Character:WaitForChild("HumanoidRootPart")  -- Додаємо до персонажа
-    print("Smoke effect created!")  -- Для перевірки в консолі
-    return smoke
+-- Перевірка наявності предмету в інвентарі
+local tool = backpack:FindFirstChild(toolName)
+
+if tool then
+    print(toolName .. " found in backpack!")
+    -- Код для активації ефекту диму або іншого
+    local part = tool.Handle  -- Можливо, треба буде змінити, залежно від об'єкта
+    local smoke = Instance.new("Smoke")
+    smoke.Parent = part
+    smoke.Opacity = 0.5
+    smoke.RiseVelocity = 5
+    smoke.Size = 10
+    smoke.Color = Color3.fromRGB(150, 150, 150)
+    smoke.Enabled = true
+else
+    print(toolName .. " not found in backpack!")
 end
-
--- Коли Speed Up потрапляє в руку
-local function onToolEquipped(tool)
-    if tool.Name == "Speed Up" then  -- Перевіряємо, чи це Speed Up
-        print("Speed Up equipped!")  -- Виводимо в консоль
-        local smoke = createSmoke()  -- Створюємо дим
-        smoke.Enabled = true  -- Увімкнути дим
-        print("Smoke effect activated!")
-        
-        -- Остановимо дим через 5 секунд
-        task.wait(5)
-        smoke.Enabled = false  -- Вимкнути дим
-        print("Smoke effect stopped!")
-    end
-end
-
--- Слухаємо подію, коли інструмент потрапляє в руку
-backpack.ChildAdded:Connect(onToolEquipped)
-
--- Перевіримо, чи є Speed Up в інвентарі
-print("Script started. Checking for Speed Up...")
